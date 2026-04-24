@@ -16,6 +16,10 @@ public class WeaponController : MonoBehaviour
 
     //Charger
     private VRMagazine magazine;
+    private bool isMagazineIn = false;
+
+    [SerializeField]
+    private Transform slider;
 
     void Start()
     {
@@ -26,23 +30,34 @@ public class WeaponController : MonoBehaviour
     void Update()
     {
         timePass += Time.deltaTime;
+        if(slider.localPosition.z < -0.020f) //
+        {
+            
+            //Debug.Log("RedytoShoot");
+            isMagazineIn = true;
+          //  Debug.Log("MagazineBool: " + isMagazineIn);
+
+        }
     }
 
     public void AddMagazine(SelectEnterEventArgs eventsArgs)
     {
         Debug.Log("Magazine added");
         magazine = eventsArgs.interactableObject.transform.GetComponent<VRMagazine>();
+        isMagazineIn = false;
+        Debug.Log("MagazineBool: " + isMagazineIn);
     }
 
     public void RemoveMagazine(SelectExitEventArgs eventArgs)
     {
         Debug.Log("Magazine removed");
         magazine = null;
+        isMagazineIn = false;
     }
 
     public void Shoot()
     {
-        if (magazine != null)
+        if (magazine != null && isMagazineIn == true)
         {
             if (fireRate <= timePass && magazine.bullets > 0)
             {
