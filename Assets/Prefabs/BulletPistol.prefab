@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2148056917353181750}
   - component: {fileID: 7426652768244370277}
   - component: {fileID: 6897911909252496918}
+  - component: {fileID: 4397700539500944030}
+  - component: {fileID: 2019805351649722296}
   m_Layer: 0
   m_Name: BulletPistol
   m_TagString: Untagged
@@ -116,9 +118,43 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!114 &4397700539500944030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5965530226914568676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935a2d74bb34b8645bc33d0fa4ecb2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  damage: 25
+--- !u!65 &2019805351649722296
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5965530226914568676}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.011691343, y: 0.013500001, z: 0.040443756}
+  m_Center: {x: 0, y: 4.656613e-10, z: 0.020221874}
 --- !u!1 &5995794232763467190
 GameObject:
   m_ObjectHideFlags: 0

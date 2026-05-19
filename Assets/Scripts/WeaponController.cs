@@ -24,6 +24,16 @@ public class WeaponController : MonoBehaviour
     private VRMagazine magazine;
     private bool isMagazineIn = false;
 
+    [Header("Shell")]
+    [SerializeField]
+    private GameObject shellPrefab;
+
+    [SerializeField]
+    private Transform shellSpawnPoint;
+
+    [SerializeField]
+    private float shellForce = 2f;
+
     [SerializeField]
     private Transform slider;
 
@@ -74,6 +84,7 @@ public class WeaponController : MonoBehaviour
                 magazine.bullets--;
                 UpdateAmmoUI();
                 timePass = 0;
+                SpawnShell();   
                 Debug.Log("Dispara");
             }
         }
@@ -120,5 +131,29 @@ public class WeaponController : MonoBehaviour
 
         ammoText.enabled = true;
         isBlinking = false;
+    }
+
+
+    void SpawnShell()
+    {
+        GameObject shellClone = Instantiate(
+            shellPrefab,
+            shellSpawnPoint.position,
+            shellSpawnPoint.rotation
+        );
+
+        Rigidbody rb = shellClone.GetComponent<Rigidbody>();
+
+        // Direcció lateral + una mica amunt
+        Vector3 ejectDirection =
+            shellSpawnPoint.right +
+            shellSpawnPoint.up * 0.5f;
+
+        rb.AddForce(ejectDirection * shellForce, ForceMode.Impulse);
+
+        // Rotació random
+        rb.AddTorque(Random.insideUnitSphere * 5f, ForceMode.Impulse);
+
+        Destroy(shellClone, 3f);
     }
 }
