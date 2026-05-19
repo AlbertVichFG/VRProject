@@ -1,5 +1,7 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using System.Collections;
 
 public class WeaponController : MonoBehaviour
 {
@@ -13,6 +15,10 @@ public class WeaponController : MonoBehaviour
     [SerializeField]
     private float fireRate;
     private float timePass; //Time since last shot
+
+    [SerializeField]
+    private TextMeshProUGUI ammoText;
+    private bool isBlinking = false;
 
     //Charger
     private VRMagazine magazine;
@@ -46,6 +52,7 @@ public class WeaponController : MonoBehaviour
         magazine = eventsArgs.interactableObject.transform.GetComponent<VRMagazine>();
         isMagazineIn = false;
         Debug.Log("MagazineBool: " + isMagazineIn);
+        UpdateAmmoUI();
     }
 
     public void RemoveMagazine(SelectExitEventArgs eventArgs)
@@ -53,6 +60,7 @@ public class WeaponController : MonoBehaviour
         Debug.Log("Magazine removed");
         magazine = null;
         isMagazineIn = false;
+        UpdateAmmoUI();
     }
 
     public void Shoot()
@@ -64,9 +72,53 @@ public class WeaponController : MonoBehaviour
                 GameObject bulletClone = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
                 bulletClone.GetComponent<Rigidbody>().linearVelocity = bulletClone.transform.forward * bulletSpeed;
                 magazine.bullets--;
+                UpdateAmmoUI();
                 timePass = 0;
                 Debug.Log("Dispara");
             }
         }
+    }
+
+    void UpdateAmmoUI()
+    {
+        if (magazine != null)
+        {
+            ammoText.text = magazine.bullets.ToString();
+
+            float ammoPercent = (float)magazine.bullets / 15f;
+
+            ammoText.color = Color.Lerp(Color.red, Color.cyan, ammoPercent);
+
+            // Low ammo warning
+            if (magazine.bullets <= 3)
+            {
+                if (!isBlinking)
+                {
+                    StartCoroutine(BlinkAmmo());
+                }
+            }
+        }
+        else
+        {
+            ammoText.text = "00/00";
+            ammoText.color = Color.red;
+        }
+    }
+
+    IEnumerator BlinkAmmo()
+    {
+        isBlinking = true;
+
+        while (magazine != null && magazine.bullets <= 3)
+        {
+            ammoText.enabled = false;
+            yield return new WaitForSeconds(0.15f);
+
+            ammoText.enabled = true;
+            yield return new WaitForSeconds(0.15f);
+        }
+
+        ammoText.enabled = true;
+        isBlinking = false;
     }
 }
