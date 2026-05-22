@@ -706,6 +706,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7635443232374445347, guid: 9c62758f974dbcb409d18cf6eea7e71a, type: 3}
   m_PrefabInstance: {fileID: 195796088}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &198619808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 198619810}
+  - component: {fileID: 198619809}
+  m_Layer: 0
+  m_Name: BulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &198619809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198619808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665854207fd1fa54bbcb022bf7ae20ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletPool
+  bulletPrefab: {fileID: 5965530226914568676, guid: d4b2b4c6a8100b149824f10704b7cbae, type: 3}
+  poolSize: 30
+--- !u!4 &198619810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198619808}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 31.78017, y: 1.83231, z: 3.18915}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &204248408 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5782696911360418534, guid: e510c3ebc1fcc91408e00937238ce7e2, type: 3}
@@ -3432,6 +3478,7 @@ GameObject:
   - component: {fileID: 874375231}
   - component: {fileID: 874375230}
   - component: {fileID: 874375229}
+  - component: {fileID: 874375233}
   m_Layer: 0
   m_Name: ZombieEnemy
   m_TagString: Untagged
@@ -3535,6 +3582,20 @@ Transform:
   - {fileID: 1276216216}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &874375233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874375228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e8c44f9b2fb9c94381dba7b0d13db53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  maxHealth: 100
+  fillImage: {fileID: 969038731}
 --- !u!1001 &875533313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4530,6 +4591,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7635443232374445347, guid: 9c62758f974dbcb409d18cf6eea7e71a, type: 3}
   m_PrefabInstance: {fileID: 948566426}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &969038730
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 969038733}
+  - component: {fileID: 969038732}
+  - component: {fileID: 969038731}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &969038731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969038730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.15168023, g: 0.5377358, b: 0.022828398, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 0
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &969038732
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969038730}
+  m_CullTransparentMesh: 1
+--- !u!224 &969038733
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969038730}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1276216216}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1, y: 0.2}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &973323603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6492,7 +6628,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 969038733}
   m_Father: {fileID: 874375232}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7724,15 +7861,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9cb6f4c0031b6747bbb7bbe677129be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
-  bulletPrefab: {fileID: 5965530226914568676, guid: d4b2b4c6a8100b149824f10704b7cbae, type: 3}
-  bulletSpawnPoint: {fileID: 1323582602}
   bulletSpeed: 0.5
   fireRate: 1
+  bulletSpawnPoint: {fileID: 1323582602}
   ammoText: {fileID: 1785677698}
+  slider: {fileID: 1267292153}
   shellPrefab: {fileID: 2490010974301798709, guid: aaff2710785d9be4dafcecc36c0e65a4, type: 3}
   shellSpawnPoint: {fileID: 761579466}
   shellForce: 2
-  slider: {fileID: 1267292153}
 --- !u!65 &1484653723
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8637,7 +8773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9834,7 +9970,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 15/15
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13364,15 +13500,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9cb6f4c0031b6747bbb7bbe677129be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
-  bulletPrefab: {fileID: 5965530226914568676, guid: d4b2b4c6a8100b149824f10704b7cbae, type: 3}
-  bulletSpawnPoint: {fileID: 1301826433}
   bulletSpeed: 0.5
   fireRate: 1
+  bulletSpawnPoint: {fileID: 1301826433}
   ammoText: {fileID: 0}
+  slider: {fileID: 0}
   shellPrefab: {fileID: 0}
   shellSpawnPoint: {fileID: 0}
   shellForce: 2
-  slider: {fileID: 0}
 --- !u!4 &8218395104425114137
 Transform:
   m_ObjectHideFlags: 0
@@ -13774,3 +13909,4 @@ SceneRoots:
   - {fileID: 2110492562}
   - {fileID: 874375232}
   - {fileID: 1741815185}
+  - {fileID: 198619810}

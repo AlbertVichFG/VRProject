@@ -4,55 +4,34 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("Stats")]
-    public float maxHealth = 100f;
-    protected float currentHealth;
+    [Header("Health")]
+    [SerializeField]
+    private float maxHealth = 100f;
 
-    [Header("Movement")]
-    public float stoppingDistance = 2f;
+    private float currentHealth;
 
-    [Header("References")]
-    public Transform player;
-
-    protected NavMeshAgent agent;
-
-    /*
     [Header("UI")]
-    [SerializeField]
-    protected Slider healthSlider;
+   // [SerializeField]
+  //  private Slider healthSlider;
 
     [SerializeField]
-    protected Image fillImage;
-    */
+    private Image fillImage;
 
-    protected virtual void Start()
+    private void Start()
     {
         currentHealth = maxHealth;
 
-        agent = GetComponent<NavMeshAgent>();
-
-        agent.stoppingDistance = stoppingDistance;
-
-        //UpdateHealthUI();
+        UpdateHealthUI();
     }
 
-    protected virtual void Update()
-    {
-        if (player == null)
-            return;
-
-        agent.SetDestination(player.position);
-
-        //LookAtPlayer();
-    }
-
-    public virtual void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
 
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth =
+            Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        //UpdateHealthUI();
+        UpdateHealthUI();
 
         if (currentHealth <= 0)
         {
@@ -60,26 +39,19 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected virtual void Die()
+    void UpdateHealthUI()
+    {
+        float healthPercent =
+            currentHealth / maxHealth;
+
+     //   healthSlider.value = healthPercent;
+
+        fillImage.color =
+            Color.Lerp(Color.red, Color.green, healthPercent);
+    }
+
+    void Die()
     {
         Destroy(gameObject);
     }
-
-    /*
-    void UpdateHealthUI()
-    {
-        float healthPercent = currentHealth / maxHealth;
-
-        healthSlider.value = healthPercent;
-
-        fillImage.color = Color.Lerp(Color.red, Color.green, healthPercent);
-    }
-
-    void LookAtPlayer()
-    {
-        Canvas canvas = healthSlider.GetComponentInParent<Canvas>();
-
-        canvas.transform.LookAt(Camera.main.transform);
-    }
-    */
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class Melee : EnemyController
-{
+{/*
     [Header("Melee Attack")]
     public float damage = 10f;
     public float attackRange = 2f;
@@ -57,5 +57,5 @@ public class Melee : EnemyController
 
             cc.Move(direction * knockbackForce);
         }
-    }
+    }*/
 }
