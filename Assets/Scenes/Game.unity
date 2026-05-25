@@ -3223,13 +3223,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761579465}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0175, z: 0.0225}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.0172, z: 0.0225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1267292153}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1001 &764655172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3574,14 +3574,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874375228}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 31.94448, y: 0.947, z: 2.91613}
+  m_LocalRotation: {x: -0, y: -0.97346467, z: -0, w: 0.22883765}
+  m_LocalPosition: {x: 19.34, y: 0.447, z: 5.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1276216216}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -153.543, z: 0}
 --- !u!114 &874375233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4633,7 +4633,7 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 0
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -7861,14 +7861,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9cb6f4c0031b6747bbb7bbe677129be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
-  bulletSpeed: 0.5
+  bulletSpeed: 3
   fireRate: 1
   bulletSpawnPoint: {fileID: 1323582602}
   ammoText: {fileID: 1785677698}
   slider: {fileID: 1267292153}
   shellPrefab: {fileID: 2490010974301798709, guid: aaff2710785d9be4dafcecc36c0e65a4, type: 3}
   shellSpawnPoint: {fileID: 761579466}
-  shellForce: 2
+  shellForce: 0.15
 --- !u!65 &1484653723
 BoxCollider:
   m_ObjectHideFlags: 0

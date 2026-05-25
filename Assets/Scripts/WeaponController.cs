@@ -7,7 +7,7 @@ public class WeaponController : MonoBehaviour
 {
     [Header("Bullet")]
     [SerializeField]
-    private float bulletSpeed = 30f;
+    private float bulletSpeed;
 
     [SerializeField]
     private float fireRate = 0.2f;
@@ -103,8 +103,7 @@ public class WeaponController : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        rb.linearVelocity =
-            bulletClone.transform.forward * bulletSpeed;
+        rb.linearVelocity = bulletClone.transform.forward * bulletSpeed;
 
         // Shell
         SpawnShell();
@@ -118,21 +117,23 @@ public class WeaponController : MonoBehaviour
     }
 
     void SpawnShell()
-    {
+    { 
+        Debug.Log("Spawn Shell");
         GameObject shellClone = Instantiate(
             shellPrefab,
             shellSpawnPoint.position,
             shellSpawnPoint.rotation
         );
 
+
         Rigidbody rb = shellClone.GetComponent<Rigidbody>();
 
         Vector3 ejectDirection =
-            shellSpawnPoint.right +
-            shellSpawnPoint.up * 0.5f;
+            shellSpawnPoint.right * 0.5f +
+            shellSpawnPoint.up * 0.2f;
 
         rb.AddForce(
-            ejectDirection * shellForce,
+            ejectDirection.normalized * shellForce,
             ForceMode.Impulse
         );
 
@@ -171,7 +172,7 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator BlinkAmmo()
+    IEnumerator BlinkAmmo()
     {
         isBlinking = true;
 

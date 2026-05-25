@@ -51,7 +51,7 @@ public class SliderController : MonoBehaviour
         {
             t += Time.deltaTime * 5; // Adjust the speed of the return as needed
             transform.localPosition = Vector3.Lerp(startPos, initialPos, t);
-            Debug.Log("Returning to initial position: ");
+           // Debug.Log("Returning to initial position: ");
             
             yield return null;
         }
