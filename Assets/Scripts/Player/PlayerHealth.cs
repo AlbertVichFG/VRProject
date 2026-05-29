@@ -52,6 +52,16 @@ public class PlayerHealth : MonoBehaviour
         fillImage.color = Color.Lerp(Color.red, Color.green, healthPercent);
     }
 
+    public void Knockback(Vector3 direction, float force)
+    {
+        CharacterController cc = GetComponent<CharacterController>();
+
+        if (cc != null)
+        {
+            cc.Move(direction * force);
+        }
+    }
+
     void Die()
     {
         Debug.Log("Player Dead");

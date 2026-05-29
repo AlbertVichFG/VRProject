@@ -6,30 +6,29 @@ public class EnemyController : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField]
-    private float maxHealth = 100f;
+    protected float maxHealth = 100f;
 
-    private float currentHealth;
+    protected float currentHealth;
 
     [Header("UI")]
-   // [SerializeField]
-  //  private Slider healthSlider;
+    //[SerializeField]
+    //protected Slider healthSlider;
 
     [SerializeField]
-    private Image fillImage;
+    protected Image fillImage;
 
-    private void Start()
+    protected virtual void Start()
     {
         currentHealth = maxHealth;
 
         UpdateHealthUI();
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
 
-        currentHealth =
-            Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         UpdateHealthUI();
 
@@ -39,18 +38,16 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void UpdateHealthUI()
+    protected virtual void UpdateHealthUI()
     {
-        float healthPercent =
-            currentHealth / maxHealth;
+        float healthPercent = currentHealth / maxHealth;
 
-     //   healthSlider.value = healthPercent;
+        //healthSlider.value = healthPercent;
 
-        fillImage.color =
-            Color.Lerp(Color.red, Color.green, healthPercent);
+        fillImage.color = Color.Lerp(Color.red, Color.green, healthPercent);
     }
 
-    void Die()
+    protected virtual void Die()
     {
         Destroy(gameObject);
     }
