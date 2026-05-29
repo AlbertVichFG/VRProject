@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public class Melee : EnemyController
-{/*
+public class EnemyMelee : EnemyController
+{
+    [Header("References")]
+    [SerializeField] private Transform player;
+
     [Header("Melee Attack")]
-    public float damage = 10f;
-    public float attackRange = 2f;
-    public float attackCooldown = 1.5f;
+    [SerializeField] private float damage = 10f;
+    [SerializeField] private float attackRange = 2f;
+    [SerializeField] private float attackCooldown = 1.5f;
 
     [Header("Knockback")]
-    public float knockbackForce = 0.3f;
+    [SerializeField] private float knockbackForce = 0.3f;
 
     private float attackTimer;
 
@@ -21,10 +24,8 @@ public class Melee : EnemyController
         playerHealth = player.GetComponent<PlayerHealth>();
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
-
         attackTimer += Time.deltaTime;
 
         float distance = Vector3.Distance(transform.position, player.position);
@@ -33,6 +34,8 @@ public class Melee : EnemyController
         {
             Attack();
         }
+
+        // animator.SetBool("Walking", true);
     }
 
     void Attack()
@@ -49,13 +52,8 @@ public class Melee : EnemyController
 
     void KnockbackPlayer()
     {
-        CharacterController cc = player.GetComponent<CharacterController>();
+        Vector3 direction = (player.position - transform.position).normalized;
 
-        if (cc != null)
-        {
-            Vector3 direction = (player.position - transform.position).normalized;
-
-            cc.Move(direction * knockbackForce);
-        }
-    }*/
+        playerHealth.Knockback(direction, knockbackForce);
+    }
 }
