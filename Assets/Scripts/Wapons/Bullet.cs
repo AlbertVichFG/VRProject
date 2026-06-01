@@ -17,6 +17,8 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("He colisionat amb: " + collision.gameObject.name);
+
         EnemyController enemy =
             collision.gameObject.GetComponentInParent<EnemyController>();
 

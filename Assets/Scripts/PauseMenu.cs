@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
@@ -8,32 +7,27 @@ public class PauseMenu : MonoBehaviour
     private GameObject pauseCanvas;
 
     [SerializeField]
-    private InputActionReference pauseAction;
-
     private bool paused;
-
-    private void Update()
-    {
-        if (pauseAction.action.triggered)
-        {
-            TogglePause();
-        }
-    }
 
     public void TogglePause()
     {
-        Debug.Log("Pause Toggled");)
-        paused = !paused;
+        paused = !pauseCanvas.activeSelf;
 
         pauseCanvas.SetActive(paused);
 
+        Debug.Log("PAUSA");
+
+        if (paused)
+        {
+            Transform cam = Camera.main.transform;
+
+            pauseCanvas.transform.position = cam.position + cam.forward * 1.5f;
+
+            pauseCanvas.transform.rotation =
+                Quaternion.LookRotation(pauseCanvas.transform.position - cam.position);
+        }
+
         Time.timeScale = paused ? 0f : 1f;
-
-        Transform cam = Camera.main.transform;
-
-        pauseCanvas.transform.position = cam.position + cam.forward * 1.5f;
-
-        pauseCanvas.transform.rotation = Quaternion.LookRotation(pauseCanvas.transform.position - cam.position);
     }
 
     public void Resume()

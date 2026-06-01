@@ -49,6 +49,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Die()
     {
+
         Destroy(gameObject);
     }
 }
