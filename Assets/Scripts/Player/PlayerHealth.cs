@@ -20,6 +20,13 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthUI();
     }
 
+    private void Update()
+    {
+        // Aquí podríem afegir regeneració de vida o altres mecanismes relacionats amb la salut.
+
+        Debug.Log($"Health: {currentHealth}/{maxHealth}");
+    }
+
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
