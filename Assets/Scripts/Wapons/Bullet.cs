@@ -5,28 +5,25 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private float damage = 25f;
 
-    private void OnEnable()
-    {
-        Invoke(nameof(DisableBullet), 5f);
-    }
+    [SerializeField]
+    private float lifeTime = 5f;
 
-    void DisableBullet()
+    private void Start()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject, lifeTime);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("He colisionat amb: " + collision.gameObject.name);
 
-        EnemyController enemy =
-            collision.gameObject.GetComponentInParent<EnemyController>();
+        IDamageable damageable = collision.gameObject.GetComponentInParent<IDamageable>();
 
-        if (enemy != null)
+        if (damageable != null)
         {
-            enemy.TakeDamage(damage);
+            damageable.TakeDamage(damage);
         }
 
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

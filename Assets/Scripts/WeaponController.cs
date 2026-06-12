@@ -1,13 +1,19 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using System.Collections;
 
 public class WeaponController : MonoBehaviour
 {
+    [SerializeField]
+    private bool automaticWeapon;
+
+
     [Header("Bullet")]
     [SerializeField]
     private float bulletSpeed;
+    [SerializeField]
+    private GameObject bulletPrefab;
 
     [SerializeField]
     private float fireRate = 0.2f;
@@ -23,6 +29,8 @@ public class WeaponController : MonoBehaviour
 
     [Header("Magazine")]
     private VRMagazine magazine;
+    [SerializeField]
+    private MagazineType acceptedMagazineType;
 
     private bool isMagazineIn = false;
 
@@ -54,8 +62,20 @@ public class WeaponController : MonoBehaviour
 
     public void AddMagazine(SelectEnterEventArgs args)
     {
-        magazine =
+        VRMagazine newMagazine =
             args.interactableObject.transform.GetComponent<VRMagazine>();
+
+        if (newMagazine == null)
+            return;
+
+        if (newMagazine.MagazineType != acceptedMagazineType)
+        {
+            Debug.Log("Wrong Magazine");
+
+            return;
+        }
+
+        magazine = newMagazine;
 
         isMagazineIn = false;
 
@@ -85,23 +105,13 @@ public class WeaponController : MonoBehaviour
         if (timePassed < fireRate)
             return;
 
-        // Bullet Pool
-        GameObject bulletClone =
-            BulletPool.Instance.GetBullet();
-
-        bulletClone.transform.position =
-            bulletSpawnPoint.position;
-
-        bulletClone.transform.rotation =
-            bulletSpawnPoint.rotation;
-
-        bulletClone.SetActive(true);
+        GameObject bulletClone = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
 
         Rigidbody rb =
             bulletClone.GetComponent<Rigidbody>();
 
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+      //  rb.linearVelocity = Vector3.zero;
+      //  rb.angularVelocity = Vector3.zero;
 
         rb.linearVelocity = bulletClone.transform.forward * bulletSpeed;
 
@@ -117,7 +127,7 @@ public class WeaponController : MonoBehaviour
     }
 
     void SpawnShell()
-    { 
+    {
         Debug.Log("Spawn Shell");
         GameObject shellClone = Instantiate(
             shellPrefab,

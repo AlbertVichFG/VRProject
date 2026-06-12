@@ -1,8 +1,13 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
-public class EnemyMelee : EnemyController
+public class EnemyMelee : MonoBehaviour, IDamageable
 {
+    [Header("Health")]
+    [SerializeField] private float maxHealth = 100f;
+    private float currentHealth;
+
     [Header("References")]
     [SerializeField] private Transform player;
 
@@ -18,32 +23,45 @@ public class EnemyMelee : EnemyController
     [SerializeField] private float knockbackForce = 0.3f;
 
     private float attackTimer;
+    private bool isAttacking;
 
-    [SerializeField]
-    private bool isDead = false;
 
     private Animator animator;
     private PlayerHealth playerHealth;
     private NavMeshAgent agent;
 
-    protected override void Start()
+    private bool isDead;
+
+    private void Start()
     {
-        base.Start();
+        if (player == null)
+        {
+            GameObject xrOrigin = GameObject.FindGameObjectWithTag("Player");
 
-      //  animator.SetBool("Walking", true);
+            if (xrOrigin != null)
+            {
+                player = xrOrigin.transform;
+            }
+        }
 
-        playerHealth = player.GetComponent<PlayerHealth>();
-        
+        currentHealth = maxHealth;
+
+        playerHealth = player.GetComponentInChildren<PlayerHealth>();
+
         animator = GetComponent<Animator>();
 
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         agent.stoppingDistance = attackRange - 0.2f;
+
+        Debug.Log(player);
     }
 
     private void Update()
     {
-        if (player == null)
+        Debug.Log(player.position);
+
+        if (isDead || player == null || isAttacking)
             return;
 
         attackTimer += Time.deltaTime;
@@ -54,39 +72,42 @@ public class EnemyMelee : EnemyController
         if (distance > attackRange)
         {
             agent.SetDestination(player.position);
+
+            if (animator != null)
+                animator.SetBool("Walking", true);
         }
         else
         {
             agent.ResetPath();
+
+            if (animator != null)
+                animator.SetBool("Walking", false);
+
             Attack();
         }
-
-        animator.SetBool("Walking", true);
     }
 
     void Attack()
     {
         if (attackTimer >= attackCooldown)
         {
-            animator.SetTrigger("Attack");
-
-            playerHealth.TakeDamage(damage);
-
-            KnockbackPlayer();
+            StartCoroutine(AttackRoutine());
 
             attackTimer = 0;
         }
     }
 
-    void KnockbackPlayer()
+    public void TakeDamage(float damage)
     {
-        Vector3 direction =
-            (player.position - transform.position).normalized;
+        currentHealth -= damage;
 
-        playerHealth.Knockback(direction,knockbackForce);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
-    protected override void Die()
+    void Die()
     {
         if (isDead)
             return;
@@ -95,9 +116,28 @@ public class EnemyMelee : EnemyController
 
         agent.enabled = false;
 
-      //  animator.SetBool("Walking", false);
-        animator.SetTrigger("Die");
+        if (animator != null)
+            animator.SetTrigger("Die");
+
+        EnemySpawner.Instance.EnemyKilled();
 
         Destroy(gameObject, 3f);
+    }
+
+
+    IEnumerator AttackRoutine()
+    {
+        isAttacking = true;
+
+        agent.isStopped = true;
+
+        if (animator != null)
+            animator.SetTrigger("Attack");
+
+        yield return new WaitForSeconds(1f);
+
+        agent.isStopped = false;
+
+        isAttacking = false;
     }
 }

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,8 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
 
     [Header("UI")]
-    [SerializeField]
-    private Slider healthSlider;
-
-    [SerializeField]
-    private Image fillImage;
+    [SerializeField]private Image fillImage;
+    [SerializeField]private TextMeshProUGUI healthText;
 
     private void Start()
     {
@@ -24,11 +22,13 @@ public class PlayerHealth : MonoBehaviour
     {
         // Aquí podríem afegir regeneració de vida o altres mecanismes relacionats amb la salut.
 
-        Debug.Log($"Health: {currentHealth}/{maxHealth}");
+      //  Debug.Log($"Health: {currentHealth}/{maxHealth}");
     }
 
     public void TakeDamage(float damage)
     {
+        Debug.Log("Player Damage: " + damage);
+
         currentHealth -= damage;
 
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -52,11 +52,21 @@ public class PlayerHealth : MonoBehaviour
 
     void UpdateHealthUI()
     {
-        float healthPercent = currentHealth / maxHealth;
+        float healthPercent =
+            currentHealth / maxHealth;
 
-        healthSlider.value = healthPercent;
+        healthText.text =
+            Mathf.RoundToInt(currentHealth).ToString();
 
-        fillImage.color = Color.Lerp(Color.red, Color.green, healthPercent);
+        Color healthColor =
+            Color.Lerp(
+                Color.red,
+                Color.green,
+                healthPercent
+            );
+
+        healthText.color = healthColor;
+        fillImage.color = healthColor;
     }
 
     public void Knockback(Vector3 direction, float force)
@@ -74,6 +84,6 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player Dead");
 
         // Aquí després:
-        // SceneManager.LoadScene("GameOver");
+        // Saltar GameOver
     }
 }

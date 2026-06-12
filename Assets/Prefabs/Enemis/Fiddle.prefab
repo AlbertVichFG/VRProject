@@ -2069,6 +2069,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8478495249636162897}
+  - component: {fileID: 6396903974900940730}
+  - component: {fileID: 1191308610286169619}
   m_Layer: 0
   m_Name: R_Hand
   m_TagString: Untagged
@@ -2096,6 +2098,42 @@ Transform:
   - {fileID: 329860628973047651}
   m_Father: {fileID: 3561270155274611621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6396903974900940730
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2554465122436721910}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.014938563, y: 0.015353981, z: 0.010000002}
+  m_Center: {x: -0.002469283, y: 0.0010884199, z: 1.7831595e-10}
+--- !u!114 &1191308610286169619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2554465122436721910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5730faa96964f004786993cd4117023a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHandHitBox
+  damage: 10
+  knockbackForce: 3
+  enemy: {fileID: 4518205334167744866}
 --- !u!1 &2588223648000881644
 GameObject:
   m_ObjectHideFlags: 0
@@ -5436,9 +5474,9 @@ GameObject:
   - component: {fileID: 7468041317364243658}
   - component: {fileID: 4476168451606602422}
   - component: {fileID: 4679210483290161936}
-  - component: {fileID: 5298651462262115161}
   - component: {fileID: 4518205334167744866}
   - component: {fileID: 371158998699880341}
+  - component: {fileID: 1141728406475014645}
   m_Layer: 0
   m_Name: Fiddle
   m_TagString: Untagged
@@ -5509,20 +5547,6 @@ CapsuleCollider:
   m_Height: 2.09
   m_Direction: 1
   m_Center: {x: 0.09, y: 0.86, z: 0.25}
---- !u!114 &5298651462262115161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7620892779511782452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e8c44f9b2fb9c94381dba7b0d13db53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  maxHealth: 100
-  fillImage: {fileID: 6374137370645629854}
 --- !u!114 &4518205334167744866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5536,14 +5560,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMelee
   maxHealth: 100
-  fillImage: {fileID: 6374137370645629854}
   player: {fileID: 0}
-  moveSpeed: 1
+  moveSpeed: 0.5
   damage: 10
   attackRange: 2
   attackCooldown: 4
-  knockbackForce: 0.3
-  isDead: 0
+  knockbackForce: 10
 --- !u!195 &371158998699880341
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5566,6 +5588,33 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &1141728406475014645
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7620892779511782452}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7681304523942213459
 GameObject:
   m_ObjectHideFlags: 0
@@ -6052,7 +6101,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7655568265374548586}
-  - component: {fileID: 3407886135414700888}
   m_Layer: 0
   m_Name: R_Hand_Snap
   m_TagString: Untagged
@@ -6076,27 +6124,6 @@ Transform:
   - {fileID: 566880988782690754}
   m_Father: {fileID: 5852332914109519498}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3407886135414700888
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8194123259868511449}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.0074349274, y: 0.0034600345, z: 0.0051636975}
-  m_Center: {x: -0.0010338072, y: 0.00035466423, z: -0.00003511113}
 --- !u!1 &8292932194010538459
 GameObject:
   m_ObjectHideFlags: 0
