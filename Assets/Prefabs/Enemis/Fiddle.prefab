@@ -5561,7 +5561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMelee
   maxHealth: 100
   player: {fileID: 0}
-  moveSpeed: 0.5
+  moveSpeed: 2
   damage: 10
   attackRange: 2
   attackCooldown: 4

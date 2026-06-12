@@ -7,5 +7,7 @@ public class VRMagazine : MonoBehaviour
 
     public MagazineType MagazineType => magazineType;
 
-    public int bullets = 15;
+    public int bullets;
+
+
 }

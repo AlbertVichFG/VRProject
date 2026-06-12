@@ -16,12 +16,16 @@ public class ColorCube : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion startRotation;
 
+    private Collider cubeCollider;
+
     private Rigidbody rb;
 
     private void Start()
     {
         startPosition = transform.position;
         startRotation = transform.rotation;
+
+        cubeCollider = GetComponent<Collider>();
 
         rb = GetComponent<Rigidbody>();
     }

@@ -59,7 +59,7 @@ public class EnemyMelee : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        Debug.Log(player.position);
+      
 
         if (isDead || player == null || isAttacking)
             return;

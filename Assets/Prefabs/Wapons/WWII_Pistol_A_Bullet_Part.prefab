@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935a2d74bb34b8645bc33d0fa4ecb2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  damage: 25
+  damage: 100
   lifeTime: 5
 --- !u!65 &5136891462665713562
 BoxCollider:

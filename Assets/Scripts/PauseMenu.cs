@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Timeline.DirectorControlPlayable;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -9,23 +11,40 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private bool paused;
 
+    [SerializeField] private GameObject pausePanel;
+
+    [SerializeField]
+    private InputActionReference pauseAction;
+
+    private void OnEnable()
+    {
+        pauseAction.action.Enable();
+        pauseAction.action.performed += PausePressed;
+    }
+
+    private void Update()
+    {
+       Debug.Log( pauseAction.action.ReadValue<bool>());
+    }
+
+
+    private void OnDisable()
+    {
+        pauseAction.action.performed -= PausePressed;
+    }
+
+    private void PausePressed(InputAction.CallbackContext context)
+    {
+        TogglePause();
+    }
+
     public void TogglePause()
     {
-        paused = !pauseCanvas.activeSelf;
+        Debug.Log("Pausa");
 
-        pauseCanvas.SetActive(paused);
+        paused = !paused;
 
-        Debug.Log("PAUSA");
-
-        if (paused)
-        {
-            Transform cam = Camera.main.transform;
-
-            pauseCanvas.transform.position = cam.position + cam.forward * 1.5f;
-
-            pauseCanvas.transform.rotation =
-                Quaternion.LookRotation(pauseCanvas.transform.position - cam.position);
-        }
+        pausePanel.SetActive(paused);
 
         Time.timeScale = paused ? 0f : 1f;
     }

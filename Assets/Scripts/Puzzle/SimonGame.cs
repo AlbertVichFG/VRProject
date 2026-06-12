@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,6 +10,8 @@ public class SimonGame : MonoBehaviour
 
     [Header("Simon Screen")]
     [SerializeField] private Image screenImage;
+    [SerializeField] private TMP_Text progressText;
+    [SerializeField] private TMP_Text codeText;
 
     [Header("Current Round")]
     [SerializeField] private List<ColorCube.CubeColor> currentSequence = new List<ColorCube.CubeColor>();
@@ -19,6 +21,7 @@ public class SimonGame : MonoBehaviour
     private bool canInput;
 
     private int currentRound = 1;
+
 
     [SerializeField] private EnemySpawner enemySpawner;
 
@@ -32,7 +35,35 @@ public class SimonGame : MonoBehaviour
 
     private void Start()
     {
+        UpdateProgressText();
+
+        screenImage.color = Color.black;
+
+        codeText.text = "";
+
+        canInput = false;
+
+    }
+
+
+    public void StartSimon()
+    {
         StartRound();
+    }
+
+    void UpdateProgressText()
+    {
+        string result = "";
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (i < currentRound - 1)
+                result += "âœ“ ";
+            else
+                result += "? ";
+        }
+
+        progressText.text = result;
     }
 
     public void RegisterColor(ColorCube.CubeColor color)
@@ -62,9 +93,14 @@ public class SimonGame : MonoBehaviour
         Debug.Log("RONDA COMPLETADA");
 
         canInput = false;
+
         Debug.Log("Digit: " + secretCode[currentRound - 1]);
 
+        StartCoroutine(ShowCodeDigit(secretCode[currentRound - 1]));
+
         currentRound++;
+
+        UpdateProgressText();
 
         currentIndex = 0;
 
@@ -75,10 +111,6 @@ public class SimonGame : MonoBehaviour
         }
 
         Invoke(nameof(StartRound), 2f);
-
-        // Aquí després:
-        // Mostrar número secret
-        // Següent ronda
     }
 
     void FailedRound()
@@ -94,17 +126,13 @@ public class SimonGame : MonoBehaviour
     {
         currentSequence.Clear();
 
-        int sequenceLength = 3;
-
-        if (currentRound == 2)
-            sequenceLength = 4;
-
-        if (currentRound >= 3)
-            sequenceLength = 5;
+        int sequenceLength = currentRound;
 
         for (int i = 0; i < sequenceLength; i++)
         {
-            currentSequence.Add((ColorCube.CubeColor)Random.Range(0, 4));
+            currentSequence.Add(
+                (ColorCube.CubeColor)Random.Range(0, 4)
+            );
         }
 
         StartCoroutine(ShowSequence());
@@ -155,8 +183,17 @@ public class SimonGame : MonoBehaviour
     void SimonFinished()
     {
         Debug.Log("SIMON Fi!");
-        // Aquí activar zombieeessss.
+        // AquÃ­ activar zombieeessss.
 
         enemySpawner.StartZombieMode();
+    }
+
+    IEnumerator ShowCodeDigit(int digit)
+    {
+        codeText.text = digit.ToString();
+
+        yield return new WaitForSeconds(2f);
+
+        codeText.text = "";
     }
 }

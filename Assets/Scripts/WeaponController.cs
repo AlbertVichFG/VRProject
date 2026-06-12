@@ -7,7 +7,9 @@ public class WeaponController : MonoBehaviour
 {
     [SerializeField]
     private bool automaticWeapon;
+    private bool isTriggerHeld;
 
+    [SerializeField] private Transform boltCheckPoint;
 
     [Header("Bullet")]
     [SerializeField]
@@ -32,6 +34,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField]
     private MagazineType acceptedMagazineType;
 
+
     private bool isMagazineIn = false;
 
     [SerializeField]
@@ -48,32 +51,55 @@ public class WeaponController : MonoBehaviour
     private float shellForce = 2f;
 
     private bool isBlinking = false;
+    private bool boltPulledBack;
+
 
     private void Update()
     {
         timePassed += Time.deltaTime;
 
+        if (automaticWeapon && isTriggerHeld)
+        {
+            Shoot();
+        }
+
+
         // Slider carregat
-        if (slider.localPosition.z < -0.020f)
+
+
+        // Ha arribat enrere?
+        if (slider.localPosition.z < boltCheckPoint.localPosition.z)
+        {
+            boltPulledBack = true;
+        }
+
+        // Ha tornat endavant després d'anar enrere?
+        if (boltPulledBack && slider.localPosition.z > boltCheckPoint.localPosition.z)
         {
             isMagazineIn = true;
+
+            boltPulledBack = false;
+
+            Debug.Log("Zi");
         }
     }
 
     public void AddMagazine(SelectEnterEventArgs args)
     {
-        VRMagazine newMagazine =
-            args.interactableObject.transform.GetComponent<VRMagazine>();
+        // VRMagazine newMagazine = args.interactableObject.transform.GetComponent<VRMagazine>();
+
+        VRMagazine newMagazine = args.interactableObject.transform.GetComponentInChildren<VRMagazine>();
 
         if (newMagazine == null)
             return;
 
         if (newMagazine.MagazineType != acceptedMagazineType)
         {
-            Debug.Log("Wrong Magazine");
 
             return;
         }
+
+
 
         magazine = newMagazine;
 
@@ -93,25 +119,36 @@ public class WeaponController : MonoBehaviour
 
     public void Shoot()
     {
+        Debug.Log("Dipara");
+
         if (magazine == null)
             return;
+
+        Debug.Log("MEga");
 
         if (!isMagazineIn)
             return;
 
+        Debug.Log("MEgaIN");
+
+
         if (magazine.bullets <= 0)
             return;
 
+
+
         if (timePassed < fireRate)
             return;
+
+
 
         GameObject bulletClone = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
 
         Rigidbody rb =
             bulletClone.GetComponent<Rigidbody>();
 
-      //  rb.linearVelocity = Vector3.zero;
-      //  rb.angularVelocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
 
         rb.linearVelocity = bulletClone.transform.forward * bulletSpeed;
 
@@ -200,5 +237,15 @@ public class WeaponController : MonoBehaviour
         ammoText.enabled = true;
 
         isBlinking = false;
+    }
+
+    public void StartFiring()
+    {
+        isTriggerHeld = true;
+    }
+
+    public void StopFiring()
+    {
+        isTriggerHeld = false;
     }
 }

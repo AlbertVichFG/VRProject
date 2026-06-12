@@ -1652,10 +1652,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Explosione
   maxHealth: 100
   player: {fileID: 0}
-  moveSpeed: 1
+  moveSpeed: 4
   explosionRange: 2.5
   explosionDamage: 30
   knockbackForce: 0.5
+  explodeDelay: 1
+  poisonGasPrefab: {fileID: 1004333659519681962, guid: 55ae43234cec8ff49a440e88df8ec8b9, type: 3}
+  exploding: 0
 --- !u!195 &7096565631357266187
 NavMeshAgent:
   m_ObjectHideFlags: 0
