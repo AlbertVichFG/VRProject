@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -9,6 +9,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject meleePrefab;
     [SerializeField] private GameObject exploderPrefab;
     [SerializeField] private GameObject shooterPrefab;
+    [SerializeField] private float spawnDelay;
+
+    [SerializeField] private GameObject keypadObject;
 
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
@@ -71,7 +74,7 @@ public class EnemySpawner : MonoBehaviour
         {
             SpawnEnemy(meleePrefab);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
 
@@ -83,14 +86,14 @@ public class EnemySpawner : MonoBehaviour
         {
             SpawnEnemy(meleePrefab);
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(spawnDelay);
         }
 
         for (int i = 0; i < 3; i++)
         {
             SpawnEnemy(exploderPrefab);
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
 
@@ -102,14 +105,14 @@ public class EnemySpawner : MonoBehaviour
         {
             SpawnEnemy(meleePrefab);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(spawnDelay);
         }
 
         for (int i = 0; i < 4; i++)
         {
             SpawnEnemy(exploderPrefab);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(spawnDelay);
         }
 
         SpawnEnemy(shooterPrefab);
@@ -117,14 +120,9 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy(GameObject enemyPrefab)
     {
-        int randomSpawn =
-            Random.Range(0, spawnPoints.Length);
+        int randomSpawn = Random.Range(0, spawnPoints.Length);
 
-        Instantiate(
-            enemyPrefab,
-            spawnPoints[randomSpawn].position,
-            Quaternion.identity
-        );
+        Instantiate(enemyPrefab, spawnPoints[randomSpawn].position, Quaternion.identity);
     }
 
     public void EnemyKilled()
@@ -136,6 +134,13 @@ public class EnemySpawner : MonoBehaviour
         if (enemiesAlive <= 0)
         {
             RoundCompleted();
+        }
+
+        if (currentRound == 3 && enemiesAlive <= 0)
+        {
+            keypadObject.SetActive(true);
+
+            SimonGame.Instance.ShowCodeMessage();
         }
     }
 

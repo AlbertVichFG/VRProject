@@ -12,9 +12,17 @@ public class SimonGame : MonoBehaviour
     [SerializeField] private Image screenImage;
     [SerializeField] private TMP_Text progressText;
     [SerializeField] private TMP_Text codeText;
+    [SerializeField] private TMP_Text objectiveText;
+    [SerializeField] private int numColors;
 
     [Header("Current Round")]
     [SerializeField] private List<ColorCube.CubeColor> currentSequence = new List<ColorCube.CubeColor>();
+
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip correctSFX;
+    [SerializeField] private AudioClip errorSFX;
 
     private int currentIndex;
 
@@ -58,9 +66,9 @@ public class SimonGame : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             if (i < currentRound - 1)
-                result += "✓ ";
+                result += "X";
             else
-                result += "? ";
+                result += "?";
         }
 
         progressText.text = result;
@@ -73,6 +81,8 @@ public class SimonGame : MonoBehaviour
 
         if (color == currentSequence[currentIndex])
         {
+            audioSource.PlayOneShot(correctSFX);
+
             currentIndex++;
 
             Debug.Log("Correcte");
@@ -117,6 +127,8 @@ public class SimonGame : MonoBehaviour
     {
         Debug.Log("ERROR");
 
+        audioSource.PlayOneShot(errorSFX);
+
         currentIndex = 0;
 
         StartCoroutine(ShowSequence());
@@ -126,13 +138,11 @@ public class SimonGame : MonoBehaviour
     {
         currentSequence.Clear();
 
-        int sequenceLength = currentRound;
+        int sequenceLength = numColors;
 
         for (int i = 0; i < sequenceLength; i++)
         {
-            currentSequence.Add(
-                (ColorCube.CubeColor)Random.Range(0, 4)
-            );
+            currentSequence.Add((ColorCube.CubeColor)Random.Range(0, 4));
         }
 
         StartCoroutine(ShowSequence());
@@ -186,6 +196,8 @@ public class SimonGame : MonoBehaviour
         // Aquí activar zombieeessss.
 
         enemySpawner.StartZombieMode();
+
+        MusicManager.Instance.PlayZombieMusic();
     }
 
     IEnumerator ShowCodeDigit(int digit)
@@ -195,5 +207,20 @@ public class SimonGame : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         codeText.text = "";
+    }
+
+
+    public void ShowCodeMessage()
+    {
+        StartCoroutine(CodeMessageRoutine());
+    }
+
+    IEnumerator CodeMessageRoutine()
+    {
+        objectiveText.text = "INTODUEIX EL CODI PER GUANYAR";
+
+        yield return new WaitForSeconds(5f);
+
+        objectiveText.text = "";
     }
 }

@@ -29,10 +29,13 @@ public class WeaponController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI ammoText;
 
+
     [Header("Magazine")]
     private VRMagazine magazine;
     [SerializeField]
     private MagazineType acceptedMagazineType;
+    [SerializeField]
+    private SliderController sliderController;
 
 
     private bool isMagazineIn = false;
@@ -52,6 +55,15 @@ public class WeaponController : MonoBehaviour
 
     private bool isBlinking = false;
     private bool boltPulledBack;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shootSFX;
+    [SerializeField] private AudioClip emptySFX;
+    [SerializeField] private AudioClip boltSFX;
+    [SerializeField] private AudioClip smgLoopSFX;
+
+    private bool smgSoundPlaying;
 
 
     private void Update()
@@ -119,21 +131,28 @@ public class WeaponController : MonoBehaviour
 
     public void Shoot()
     {
-        Debug.Log("Dipara");
+
+        audioSource.PlayOneShot(shootSFX);
+        //Debug.Log("Dipara");
 
         if (magazine == null)
             return;
 
-        Debug.Log("MEga");
+      //  Debug.Log("MEga");
 
         if (!isMagazineIn)
             return;
 
-        Debug.Log("MEgaIN");
+        // Debug.Log("MEgaIN");
+
+        sliderController.Recoil();
 
 
         if (magazine.bullets <= 0)
+        {
+            audioSource.PlayOneShot(emptySFX);
             return;
+        }
 
 
 
@@ -242,10 +261,31 @@ public class WeaponController : MonoBehaviour
     public void StartFiring()
     {
         isTriggerHeld = true;
+
+        if (automaticWeapon && !smgSoundPlaying)
+        {
+            audioSource.clip = smgLoopSFX;
+            audioSource.loop = true;
+            audioSource.Play();
+
+            smgSoundPlaying = true;
+        }
     }
 
     public void StopFiring()
     {
         isTriggerHeld = false;
+
+        if (automaticWeapon)
+        {
+            audioSource.Stop();
+
+            smgSoundPlaying = false;
+        }
+    }
+
+    public void PlayBoltSound()
+    {
+        audioSource.PlayOneShot(boltSFX);
     }
 }

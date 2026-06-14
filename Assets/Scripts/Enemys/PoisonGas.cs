@@ -3,21 +3,20 @@ using UnityEngine;
 
 public class PoisonGas : MonoBehaviour
 {
-    [SerializeField] private float duration = 3f;
-    [SerializeField] private float damagePerSecond = 5f;
-
-    private void Start()
-    {
-        Destroy(gameObject, duration);
-    }
+    [SerializeField] private float damagePerSecond = 10f;
 
     private void OnTriggerStay(Collider other)
     {
-        PlayerHealth player = other.GetComponentInParent<PlayerHealth>();
+        Debug.Log("TOCANT: " + other.name);
 
-        if (player == null)
+        if (!other.CompareTag("Player"))
             return;
 
-        player.TakeDamage(damagePerSecond * Time.deltaTime);
+        PlayerHealth player = FindFirstObjectByType<PlayerHealth>();
+
+        if (player != null)
+        {
+            player.TakeDamage(damagePerSecond * Time.deltaTime);
+        }
     }
 }

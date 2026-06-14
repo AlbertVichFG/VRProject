@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1803174016588407145}
   - component: {fileID: 1137119049875721195}
   - component: {fileID: 7191074471420763416}
+  - component: {fileID: -4523672198154296349}
   m_Layer: 0
   m_Name: Explosion Zone
   m_TagString: Untagged
@@ -112,3 +113,17 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4523672198154296349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004333659519681962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c9234f765fbd9d498dcf49a1ebd2e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoisonGas
+  duration: 7
+  damagePerSecond: 5

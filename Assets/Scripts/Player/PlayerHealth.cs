@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -9,8 +9,17 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
 
     [Header("UI")]
-    [SerializeField]private Image fillImage;
-    [SerializeField]private TextMeshProUGUI healthText;
+    //[SerializeField] private Image fillImage;
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private GameObject gameOverPanel;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip damageSFX;
+
+
+    [SerializeField]
+    private PauseMenu pauseMenu;
 
     private void Start()
     {
@@ -20,16 +29,19 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        // Aquí podríem afegir regeneració de vida o altres mecanismes relacionats amb la salut.
+        
 
-      //  Debug.Log($"Health: {currentHealth}/{maxHealth}");
+        //  Debug.Log($"Health: {currentHealth}/{maxHealth}");
     }
 
     public void TakeDamage(float damage)
     {
         Debug.Log("Player Damage: " + damage);
+        
+        audioSource.PlayOneShot(damageSFX);
 
         currentHealth -= damage;
+        DmgFlash.Instance.ShowFlash();
 
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
@@ -66,7 +78,7 @@ public class PlayerHealth : MonoBehaviour
             );
 
         healthText.color = healthColor;
-        fillImage.color = healthColor;
+     //   fillImage.color = healthColor;
     }
 
     public void Knockback(Vector3 direction, float force)
@@ -83,7 +95,8 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("Player Dead");
 
-        // Aquí després:
-        // Saltar GameOver
+        pauseMenu.ShowPanel(gameOverPanel);
+
+        Time.timeScale = 0f;
     }
 }

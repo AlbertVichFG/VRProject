@@ -22,6 +22,8 @@ public class Bullet : MonoBehaviour
         if (damageable != null)
         {
             damageable.TakeDamage(damage);
+
+            HitMark.Instance.ShowHitmarker();
         }
 
         Destroy(gameObject);

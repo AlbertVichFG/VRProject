@@ -22,6 +22,10 @@ public class EnemyMelee : MonoBehaviour, IDamageable
     [Header("Knockback")]
     [SerializeField] private float knockbackForce = 0.3f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip idleZombieSFX;
+
     private float attackTimer;
     private bool isAttacking;
 
@@ -42,7 +46,13 @@ public class EnemyMelee : MonoBehaviour, IDamageable
             {
                 player = xrOrigin.transform;
             }
+
+
         }
+
+        audioSource.clip = idleZombieSFX;
+        audioSource.loop = true;
+        audioSource.Play();
 
         currentHealth = maxHealth;
 
@@ -109,10 +119,14 @@ public class EnemyMelee : MonoBehaviour, IDamageable
 
     void Die()
     {
+
         if (isDead)
             return;
 
         isDead = true;
+
+        audioSource.Stop();
+        Destroy(audioSource);
 
         agent.enabled = false;
 

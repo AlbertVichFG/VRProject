@@ -5,7 +5,7 @@ using System.Collections;
 public class Disparador : MonoBehaviour, IDamageable
 {
     [Header("Health")]
-    [SerializeField] private float maxHealth = 80f;
+    [SerializeField] private float maxHealth;
     private float currentHealth;
 
     [Header("References")]
@@ -24,6 +24,10 @@ public class Disparador : MonoBehaviour, IDamageable
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 3f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip shootSFX;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -110,6 +114,8 @@ public class Disparador : MonoBehaviour, IDamageable
 
     void SpawnBullet()
     {
+        audioSource.PlayOneShot(shootSFX);
+
         if (animator != null)
         {
             animator.SetInteger("AttackIndex", Random.Range(1, 4));

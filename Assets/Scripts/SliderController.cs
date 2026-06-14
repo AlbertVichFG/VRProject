@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class SliderController : MonoBehaviour
@@ -14,7 +15,10 @@ public class SliderController : MonoBehaviour
     private Transform leftHand, rightHand;
     private Vector3 handPos;
 
-    private Transform usedHand;    
+    [SerializeField]
+    private WeaponController weaponController;
+
+    private Transform usedHand;
     private bool isGrabbed;
 
 
@@ -37,10 +41,11 @@ public class SliderController : MonoBehaviour
     void SliderRelease(InputAction.CallbackContext context)
     {
         isGrabbed = false;
-     //   transform.localPosition = initialPos;
+        //   transform.localPosition = initialPos;
         StartCoroutine(ReturnToInitialPos());
-      //  grabLeft.action.canceled -= SliderRelease;
-      //  grabRight.action.canceled -= SliderRelease;
+        weaponController.PlayBoltSound();
+        //  grabLeft.action.canceled -= SliderRelease;
+        //  grabRight.action.canceled -= SliderRelease;
     }
 
     IEnumerator ReturnToInitialPos()
@@ -51,8 +56,8 @@ public class SliderController : MonoBehaviour
         {
             t += Time.deltaTime * 5; // Adjust the speed of the return as needed
             transform.localPosition = Vector3.Lerp(startPos, initialPos, t);
-           // Debug.Log("Returning to initial position: ");
-            
+            // Debug.Log("Returning to initial position: ");
+
             yield return null;
         }
     }
@@ -64,21 +69,21 @@ public class SliderController : MonoBehaviour
             Vector3 newHandPos = usedHand.position;
             Vector3 deltaPos = newHandPos - handPos;
             float distance = Mathf.Clamp(deltaPos.magnitude, 0, limitSlider);
-            transform.localPosition = initialPos + new Vector3 (0, 0, distance);
+            transform.localPosition = initialPos + new Vector3(0, 0, distance);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("LeftHand"))
+        if (other.CompareTag("LeftHand"))
         {
-               grabLeft.action.performed += SliderGrabed;
+            grabLeft.action.performed += SliderGrabed;
             grabLeft.action.canceled += SliderRelease;
             usedHand = leftHand;
         }
         else if (other.CompareTag("RightHand"))
         {
-                grabRight.action.performed += SliderGrabed;
+            grabRight.action.performed += SliderGrabed;
             grabRight.action.canceled += SliderRelease;
             usedHand = rightHand;
         }
@@ -97,4 +102,25 @@ public class SliderController : MonoBehaviour
             grabRight.action.performed -= SliderGrabed;
         }
     }
+
+
+    public void Recoil()
+    {
+        StopAllCoroutines();
+
+        StartCoroutine(RecoilRoutine());
+    }
+
+    IEnumerator RecoilRoutine()
+    {
+        Vector3 originalPos = transform.localPosition;
+
+        transform.localPosition =
+            originalPos + new Vector3(0, 0, -0.02f);
+
+        yield return new WaitForSeconds(0.03f);
+
+        transform.localPosition = originalPos;
+    }
+
 }

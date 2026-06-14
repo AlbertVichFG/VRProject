@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Timeline.DirectorControlPlayable;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
-    private GameObject pauseCanvas;
+    private Transform playerCamera;
 
     [SerializeField]
     private bool paused;
@@ -24,7 +23,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-       Debug.Log( pauseAction.action.ReadValue<bool>());
+     //  Debug.Log( pauseAction.action.ReadValue<bool>());
     }
 
 
@@ -40,20 +39,29 @@ public class PauseMenu : MonoBehaviour
 
     public void TogglePause()
     {
-        Debug.Log("Pausa");
+        //Debug.Log("Pausa");
 
         paused = !paused;
 
-        pausePanel.SetActive(paused);
+        if (paused)
+        {
+            ShowPanel(pausePanel);
 
-        Time.timeScale = paused ? 0f : 1f;
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            pausePanel.SetActive(false);
+
+            Time.timeScale = 1f;
+        }
     }
 
     public void Resume()
     {
         paused = false;
 
-        pauseCanvas.SetActive(false);
+        pausePanel.SetActive(false);
 
         Time.timeScale = 1f;
     }
@@ -70,5 +78,21 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
+    }
+
+
+    public void ShowPanel(GameObject panel)
+    {
+        Vector3 spawnPos =
+            playerCamera.position +
+            playerCamera.forward * 2f;
+
+        panel.transform.position = spawnPos;
+
+        panel.transform.LookAt(playerCamera);
+
+        panel.transform.Rotate(0, 180, 0);
+
+        panel.SetActive(true);
     }
 }

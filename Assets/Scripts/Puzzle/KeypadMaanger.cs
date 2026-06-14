@@ -7,10 +7,17 @@ public class KeypadMaanger : MonoBehaviour
     [SerializeField] private TextMeshPro codeText;
     [SerializeField] private GameObject winPanel;
 
+    [SerializeField]
+    private PauseMenu pauseMenu;
+
     private string currentCode = "";
 
     [SerializeField]
     private string correctCode = "7241";
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip buttonSFX;
 
     private void Start()
     {
@@ -22,6 +29,8 @@ public class KeypadMaanger : MonoBehaviour
 
         if (currentCode.Length >= 4)
             return;
+
+        audioSource.PlayOneShot(buttonSFX);
 
         currentCode += number;
 
@@ -36,7 +45,7 @@ public class KeypadMaanger : MonoBehaviour
 
             codeText.text = "WIN";
 
-            winPanel.SetActive(true);
+            pauseMenu.ShowPanel(winPanel);
 
             Time.timeScale = 0f;
         }
