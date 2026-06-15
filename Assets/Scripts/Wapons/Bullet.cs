@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("He colisionat amb: " + collision.gameObject.name);
+      //  Debug.Log("He colisionat amb: " + collision.gameObject.name);
 
         IDamageable damageable = collision.gameObject.GetComponentInParent<IDamageable>();
 

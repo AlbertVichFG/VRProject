@@ -4,19 +4,23 @@ public class Granade : MonoBehaviour
 {
     [SerializeField] private GameObject pinObject;
 
-    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private ParticleSystem explosionParticles;
 
     [SerializeField] private float fuseTime = 3f;
     [SerializeField] private float explosionRadius = 5f;
     [SerializeField] private float damage = 50f;
 
+
+    [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip explosionSFX;
 
-    private bool pinRemoved;
+    [SerializeField] private bool pinRemoved;
 
     public void RemovePin()
     {
+        Debug.Log("PIN REMOVED");
+
         if (pinRemoved)
             return;
 
@@ -24,16 +28,23 @@ public class Granade : MonoBehaviour
 
         pinObject.transform.SetParent(null);
 
+        Rigidbody rb = pinObject.GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
+
         Invoke(nameof(Explode), fuseTime);
     }
 
     void Explode()
     {
 
+        Debug.Log("Granade exploded!");
 
         Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius);
-
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         foreach (Collider hit in hits)
         {
@@ -45,12 +56,13 @@ public class Granade : MonoBehaviour
             }
         }
 
-        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-
         AudioSource.PlayClipAtPoint(explosionSFX, transform.position);
 
+        explosionParticles.transform.SetParent(null);
 
-        Destroy(explosion, 3f);
+        explosionParticles.Play();
+
+        Destroy(explosionParticles.gameObject, 3f);
 
         Destroy(gameObject);
     }

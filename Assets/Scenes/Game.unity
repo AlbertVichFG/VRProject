@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab6e96a8f8489c443a9f26e33623df50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DmgFlash
-  flashImage: {fileID: 0}
+  flashObject: {fileID: 0}
 --- !u!82 &10777332
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3462,6 +3462,8 @@ MonoBehaviour:
   currentHealth: 100
   healthText: {fileID: 1502786119}
   gameOverPanel: {fileID: 1970607410}
+  audioSource: {fileID: 0}
+  damageSFX: {fileID: 0}
   pauseMenu: {fileID: 10777329}
 --- !u!114 &812615258
 MonoBehaviour:
@@ -8584,7 +8586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_TagString
@@ -9989,6 +9991,8 @@ MonoBehaviour:
   meleePrefab: {fileID: 7620892779511782452, guid: 8341582c35373ce438ed97bd7dc7d4a9, type: 3}
   exploderPrefab: {fileID: 2790892326546604740, guid: f8e7ce23b47f0e84ba85c579a7ecc131, type: 3}
   shooterPrefab: {fileID: 7155342640497174056, guid: 98ba39c8e94adff47a0354b8d2743369, type: 3}
+  spawnDelay: 0
+  keypadObject: {fileID: 0}
   spawnPoints:
   - {fileID: 1879415093}
   - {fileID: 1491467423}
@@ -11663,6 +11667,8 @@ MonoBehaviour:
   screenImage: {fileID: 216993931}
   progressText: {fileID: 587215118}
   codeText: {fileID: 1177650105}
+  objectiveText: {fileID: 0}
+  numColors: 0
   currentSequence: 
   audioSource: {fileID: 2137413207}
   correctSFX: {fileID: 8300000, guid: ed9336441f15793428a7e1330465d0ab, type: 3}

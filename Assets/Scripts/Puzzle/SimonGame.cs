@@ -108,6 +108,8 @@ public class SimonGame : MonoBehaviour
 
         StartCoroutine(ShowCodeDigit(secretCode[currentRound - 1]));
 
+        numColors++;
+
         currentRound++;
 
         UpdateProgressText();

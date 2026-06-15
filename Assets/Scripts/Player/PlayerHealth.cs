@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        
+
 
         //  Debug.Log($"Health: {currentHealth}/{maxHealth}");
     }
@@ -37,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         Debug.Log("Player Damage: " + damage);
-        
+
         audioSource.PlayOneShot(damageSFX);
 
         currentHealth -= damage;
@@ -64,21 +64,15 @@ public class PlayerHealth : MonoBehaviour
 
     void UpdateHealthUI()
     {
-        float healthPercent =
-            currentHealth / maxHealth;
+        float healthPercent = currentHealth / maxHealth;
 
         healthText.text =
             Mathf.RoundToInt(currentHealth).ToString();
 
-        Color healthColor =
-            Color.Lerp(
-                Color.red,
-                Color.green,
-                healthPercent
-            );
+        Color healthColor = Color.Lerp(Color.red, Color.green, healthPercent);
 
         healthText.color = healthColor;
-     //   fillImage.color = healthColor;
+        //   fillImage.color = healthColor;
     }
 
     public void Knockback(Vector3 direction, float force)
@@ -96,6 +90,21 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player Dead");
 
         pauseMenu.ShowPanel(gameOverPanel);
+
+        EnemyMelee[] melee = FindObjectsByType<EnemyMelee>(FindObjectsSortMode.None);
+
+        AudioSource[] audios = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+
+        foreach (AudioSource audio in audios)
+        {
+            audio.Stop();
+        }
+
+        foreach (var enemy in melee)
+        {
+            Destroy(enemy.gameObject);
+        }
+
 
         Time.timeScale = 0f;
     }
