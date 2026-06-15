@@ -162,7 +162,14 @@ public class EnemySpawner : MonoBehaviour
     void AllRoundsCompleted()
     {
         Debug.Log("ALL ROUNDS COMPLETED");
+        /*
+        KeypadMaanger keypadManager =    keypadObject.GetComponentInChildren<KeypadMaanger>();
 
-        // Obrir porta final
+        keypadManager.UnlockKeypad();
+
+        keypadObject.SetActive(true);
+
+        SimonGame.Instance.ShowCodeMessage();*/
+
     }
 }

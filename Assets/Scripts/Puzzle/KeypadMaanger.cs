@@ -7,6 +7,8 @@ public class KeypadMaanger : MonoBehaviour
     [SerializeField] private TextMeshPro codeText;
     [SerializeField] private GameObject winPanel;
 
+    [SerializeField] private bool canEnterCode;
+
     [SerializeField]
     private PauseMenu pauseMenu;
 
@@ -39,6 +41,12 @@ public class KeypadMaanger : MonoBehaviour
 
     public void EnterCode()
     {
+        if (!canEnterCode)
+        {
+            Debug.Log("Acaba les rondes primer!");
+            return;
+        }
+
         if (currentCode == correctCode)
         {
             Debug.Log("WIN");
@@ -70,5 +78,13 @@ public class KeypadMaanger : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         ClearCode();
+    }
+
+
+    public void UnlockKeypad()
+    {
+        canEnterCode = true;
+
+        Debug.Log("Keypad desbloquejat");
     }
 }
